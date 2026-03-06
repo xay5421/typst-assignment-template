@@ -16,6 +16,7 @@
   color: auto, 
   newpage: true,
   solution: none, 
+  comment: none,
   ..body
 ) = {
   
@@ -78,7 +79,7 @@
         // 4. 显示分割线
         // 条件：必须“有题目”且“有答案”，才画线！
         #if has-body and solution != none {
-          pad(top: 0.5em, bottom: 0.5em)[
+          pad(top: 0.3em, bottom: 0.3em)[
              #line(length: 100%, stroke: (paint: box_color, dash: "dashed", thickness: 0.5pt))
           ]
         }
@@ -88,6 +89,23 @@
           text(weight: "bold", fill: box_color.darken(20%))[Solution:]
           v(0.2em)
           solution
+        }
+
+        // 6. 显示评论 (Comment)
+        #if comment != none {
+            // 如果只有答案或者只有题目，或者都有，只要上方有东西，就画线
+            if has-body or solution != none {
+                pad(top: 0.3em, bottom: 0.3em)[
+                     #line(length: 100%, stroke: (paint: box_color, dash: "dashed", thickness: 0.5pt))
+                ]
+            }
+            
+            // 评论样式
+            text(size: 0.9em)[
+                #text(weight: "bold", fill: box_color.darken(30%))[Note:] 
+                #h(0.5em)
+                #text(style: "italic", fill: black.lighten(40%), comment)
+            ]
         }
         // ------------------------------------------------
         // 逻辑结束
